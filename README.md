@@ -3,7 +3,7 @@
 ## Purpose
 Attach hooks to your ENV vars and wrap them in Proxy Objects.
 
-## Example
+## Example with built-in URI Proxy
     ENV['SERVICE'] = 'http://username:password@example.com:3000/"
 
     ENV['SERVICE']             #=> 'http://username:password@example.com:3000/"
@@ -15,3 +15,13 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
     ENV['SERVICE'].scheme      #=> 'http'
     ENV['SERVICE'].port        #=> 3000
 
+## Add your own Proxies
+    class TestProxy
+      def initialize(value)
+      end
+    end
+
+    SmartEnv.use(TestProxy).when { |key, value| key == 'FOO' }
+
+    ENV['FOO'] = 'bar'
+    ENV['FOO'].class           #=> TestProxy
