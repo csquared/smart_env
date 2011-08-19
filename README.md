@@ -1,5 +1,9 @@
 # SmartEnv
 
+    gem install smart_env
+  
+    require 'smart_env'
+
 ## Purpose
 Attach hooks to your ENV vars and wrap them in Proxy Objects.
 
