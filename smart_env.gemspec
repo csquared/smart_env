@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Chris Continanza"]
   s.email       = ["christopher.continanza@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Lazily proxy ENV values}
+  s.description = %q{Allows you to register Proxy classes for ENV vars by using blocks to match keys and values}
 
   s.rubyforge_project = "smart_env"
 
