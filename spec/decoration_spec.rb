@@ -18,8 +18,8 @@ describe SmartEnv, 'decoration' do
       end
     end
 
-    SmartEnv.use(PassOne).when{ true }
-    SmartEnv.use(PassTwo).when{ true }
+    ENV.use(PassOne).when{ true }
+    ENV.use(PassTwo).when{ true }
   end
 
   it "should pass successive value to all callbacks that match" do
