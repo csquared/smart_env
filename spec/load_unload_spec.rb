@@ -3,7 +3,6 @@ require 'spec_helper'
 describe SmartEnv, 'load/unload' do 
   context "on extend" do
     before do
-      # i got my hash pipe
       @env = {} 
       @env.extend SmartEnv
 

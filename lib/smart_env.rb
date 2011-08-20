@@ -2,19 +2,18 @@ require "smart_env/version"
 require "smart_env/uri_proxy"
 
 module SmartEnv
-  extend self
-
-  @@loaded   = false
-  @@registry = []
+  attr_accessor :registry
 
   def clear_registry
-    @@registry = []
+    @registry = []
   end
 
   def reset_registry
-    @@registry = [
-      [lambda{ |k,v| v.match(/^\w+:\/\//) }, UriProxy]
-    ]
+    @registry = default
+  end
+
+  def default
+    [[UriProxy, lambda{ |k,v| v.match(/^\w+:\/\//) }]]
   end
 
   def use(klass)
@@ -24,38 +23,34 @@ module SmartEnv
 
   def when(&block)
     raise "Block must take 0 or 2 arguments: key and value" unless (block.arity == 0 || block.arity == 2)
-    @@registry << [block, @class]
+    registry << [@class, block]
     self
   end
 
-  def [](key)
-    value = ENV.get(key)
-    @@registry.each do |condition, klass|
-      result = condition.call(key, value) rescue false
-      value  = klass.new(value) if result
-    end
-    value
+  def registry
+    @registry ||= default
   end
 
   def unload!
     class << self
       alias_method :[], :get  
-      alias_method :[]=, :set
+#      alias_method :[]=, :set
     end
-    @@loaded = false
   end
 
-  def extended(base)
-    reset_registry
-    return if @@loaded
+  def self.extended(base)
     class << base
       alias_method :get, :[]  
 
       def [](key)
-        SmartEnv[key]
+        value = get(key)
+        registry.each do |klass, condition|
+          result = condition.call(key, value) rescue false
+          value  = klass.new(value) if value && result
+        end
+        value
       end
     end
-    @@loaded = true
   end
 end
 

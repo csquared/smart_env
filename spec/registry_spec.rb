@@ -6,7 +6,7 @@ describe SmartEnv, 'registering your own Proxies' do
       def initialize(value)
       end
     end
-    SmartEnv.use(TestProxy).when { |key, value| key == 'FOO' }
+    ENV.use(TestProxy).when { |key, value| key == 'FOO' }
   end
 
   it "should use the specified proxy when the block returns true" do
@@ -18,8 +18,8 @@ describe SmartEnv, 'registering your own Proxies' do
   end
 
   it "raises error if the block doens't have two args" do
-    lambda { SmartEnv.use(TestProxy).when { |k,v,x| name == 'FOO' } }.should raise_error
-    lambda { SmartEnv.use(TestProxy).when { |value| name == 'FOO' } }.should raise_error
-    lambda { SmartEnv.use(TestProxy).when { false } }.should_not raise_error
+    lambda { ENV.use(TestProxy).when { |k,v,x| name == 'FOO' } }.should raise_error
+    lambda { ENV.use(TestProxy).when { |value| name == 'FOO' } }.should raise_error
+    lambda { ENV.use(TestProxy).when { false } }.should_not raise_error
   end
 end
