@@ -28,7 +28,7 @@ module SmartEnv
     value = ENV.get(key)
     @@registry.each do |condition, klass|
       result = condition.call(key, value) rescue false
-      return klass.new(value) if result
+      value  = klass.new(value) if result
     end
     value
   end
