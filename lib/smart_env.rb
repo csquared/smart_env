@@ -7,6 +7,10 @@ module SmartEnv
   @@loaded   = false
   @@registry = []
 
+  def clear_registry
+    @@registry = []
+  end
+
   def reset_registry
     @@registry = [
       [lambda{ |k,v| v.match(/^\w+:\/\//) }, UriProxy]
@@ -19,7 +23,7 @@ module SmartEnv
   end
 
   def when(&block)
-    raise "Block must take 0 or 2 arguments" unless ( block.arity == 0 || block.arity == 2)
+    raise "Block must take 0 or 2 arguments: key and value" unless (block.arity == 0 || block.arity == 2)
     @@registry << [block, @class]
     self
   end
@@ -34,17 +38,17 @@ module SmartEnv
   end
 
   def unload!
-    class << ENV
+    class << self
       alias_method :[], :get  
       alias_method :[]=, :set
     end
     @@loaded = false
   end
 
-  def load!
+  def extended(base)
     reset_registry
     return if @@loaded
-    class << ENV
+    class << base
       alias_method :get, :[]  
 
       def [](key)
@@ -55,4 +59,4 @@ module SmartEnv
   end
 end
 
-SmartEnv.load!
+ENV.extend SmartEnv
