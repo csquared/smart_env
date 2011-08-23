@@ -25,7 +25,7 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
       end
     end
 
-    SmartEnv.use(TestProxy).when { |key, value| key == 'FOO' }
+    ENV.use(TestProxy).when { |key, value| key == 'FOO' }
 
     ENV['FOO'] = 'bar'
     ENV['FOO'].class           #=> TestProxy
