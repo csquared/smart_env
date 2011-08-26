@@ -12,7 +12,6 @@ describe SmartEnv, 'uri support' do
   end
 
   context "with a value FOO that is a URI" do
-
     before do
       @url = 'http://username:password@this.domain.example.com:3000/path?var=val'
       ENV['FOO'] = @url
@@ -45,6 +44,10 @@ describe SmartEnv, 'uri support' do
 
     it "should respond to #port with the port" do
       ENV['FOO'].port.should == 3000
+    end
+
+    it "should expose params via the #params method" do
+      ENV['FOO'].params['var'].should == 'val'
     end
   end
 end

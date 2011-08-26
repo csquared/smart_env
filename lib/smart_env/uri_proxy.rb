@@ -1,14 +1,20 @@
 require 'uri'
+require 'cgi'
 require 'forwardable'
 
 module SmartEnv
   class UriProxy < BasicObject
+    attr_reader :params
     extend ::Forwardable
     def_delegators :@uri, *(::URI::Generic::COMPONENT + [:user, :password])
 
     def initialize(uri)
       @original = uri
       @uri = ::URI.parse(uri)
+      @params = ::CGI.parse(@uri.query.to_s)
+      @params.each do |key, values|
+        @params[key] = values.first if values.size == 1
+      end
     end
 
     def base_uri
