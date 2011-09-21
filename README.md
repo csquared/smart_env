@@ -29,3 +29,10 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
 
     ENV['FOO'] = 'bar'
     ENV['FOO'].class           #=> TestProxy
+
+## License
+
+SmartENV distributed under the terms of the MIT License. See [LICENSE][] for details.
+
+[LICENSE]: /csquared/smart_env/blob/master/LICENSE
+
