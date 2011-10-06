@@ -13,7 +13,7 @@ module SmartEnv
   end
 
   def default
-    [[UriProxy, lambda{ |k,v| v.match(/^\w+:\/\//) }]]
+    []
   end
 
   def use(klass)

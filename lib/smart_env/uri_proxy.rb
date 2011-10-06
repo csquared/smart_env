@@ -17,6 +17,10 @@ module SmartEnv
       end
     end
 
+    def self.when(key, value)
+      value.match(/^\w+:\/\//) 
+    end
+
     def base_uri
       base = "#{@uri.scheme}://#{@uri.host}"
       (@uri.port ? "#{base}:#{@uri.port}" : base) + '/'
