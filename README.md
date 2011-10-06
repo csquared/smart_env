@@ -8,6 +8,8 @@
 Attach hooks to your ENV vars and wrap them in Proxy Objects.
 
 ## Example with built-in URI Proxy
+    ENV.use(SmartEnv::UriProxy)
+
     ENV['SERVICE'] = 'http://username:password@example.com:3000/"
 
     ENV['SERVICE']             #=> 'http://username:password@example.com:3000/"
@@ -32,7 +34,7 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
     ENV['FOO'] = 'bar'
     ENV['FOO'].class           #=> TestProxy
 
-### Or by implementing ::detect
+### Or by implementing ::when
 
     class TestProxy
       def initialize(key, value)

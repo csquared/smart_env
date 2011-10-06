@@ -1,6 +1,10 @@
 require 'spec_helper'
 
 describe SmartEnv, 'uri support' do
+  before do
+    ENV.use(SmartEnv::UriProxy)
+  end
+
   context "with a value FOO that is not a URI" do
     before do
       ENV['FOO'] = 'bar'
