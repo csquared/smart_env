@@ -4,15 +4,15 @@ describe SmartEnv, 'decoration' do
   before do
     class PassOne < String
       attr_accessor :one
-      def initialize(value)
+      def initialize(key, value)
         @one = true
-        super
+        super(value)
       end
     end
 
     class PassTwo < PassOne
       attr_accessor :two
-      def initialize(value)
+      def initialize(key, value)
         @two = true
         super
       end

@@ -8,9 +8,9 @@ describe SmartEnv, 'load/unload' do
 
       class PassOne < String
         attr_accessor :one
-        def initialize(value)
+        def initialize(key, value)
           @one = true
-          super
+          super(value)
         end
       end
     end

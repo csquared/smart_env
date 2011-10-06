@@ -1,9 +1,8 @@
 require 'spec_helper'
-
-describe SmartEnv, 'registering your own Proxies' do
+describe SmartEnv, 'registering your own Proxies with a block' do
   before do
     class TestProxy
-      def initialize(value)
+      def initialize(key, value)
       end
     end
     ENV.use(TestProxy).when { |key, value| key == 'FOO' }

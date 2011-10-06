@@ -8,7 +8,7 @@ module SmartEnv
     extend ::Forwardable
     def_delegators :@uri, *(::URI::Generic::COMPONENT + [:user, :password])
 
-    def initialize(uri)
+    def initialize(_key, uri)
       @original = uri
       @uri = ::URI.parse(uri)
       @params = ::CGI.parse(@uri.query.to_s)

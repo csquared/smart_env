@@ -46,7 +46,7 @@ module SmartEnv
         value = get(key)
         registry.each do |klass, condition|
           result = condition.call(key, value) rescue false
-          value  = klass.new(value) if value && result
+          value  = klass.new(key, value) if value && result
         end
         value
       end
