@@ -34,7 +34,6 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
 
 ### Or by implementing ::detect
 
-    ```ruby
     class TestProxy
       def initialize(key, value)
       end
@@ -47,7 +46,6 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
 
     ENV['FOO'] = 'bar'
     ENV['FOO'].class           #=> TestProxy
-    ```
 ## License
 
 SmartENV distributed under the terms of the MIT License. See [LICENSE][] for details.
