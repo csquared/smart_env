@@ -25,7 +25,7 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
 
 ### With a block
     class TestProxy
-      def initialize(value)
+      def initialize(key, value)
       end
     end
 
