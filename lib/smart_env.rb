@@ -18,6 +18,9 @@ module SmartEnv
 
   def use(klass)
     @class = klass
+    if @class.respond_to? :when
+      registry << [@class, lambda { |k,v| @class.when(k,v)  }]
+    end
     self
   end
 

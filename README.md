@@ -20,6 +20,8 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
     ENV['SERVICE'].port        #=> 3000
 
 ## Add your own Proxies
+
+### With a block
     class TestProxy
       def initialize(value)
       end
@@ -30,6 +32,22 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
     ENV['FOO'] = 'bar'
     ENV['FOO'].class           #=> TestProxy
 
+### Or by implementing ::detect
+
+    ```ruby
+    class TestProxy
+      def initialize(key, value)
+      end
+      
+      def self.when(key, value)
+        key == 'FOO'
+      end
+    end
+    ENV.use(TestProxy)
+
+    ENV['FOO'] = 'bar'
+    ENV['FOO'].class           #=> TestProxy
+    ```
 ## License
 
 SmartENV distributed under the terms of the MIT License. See [LICENSE][] for details.
