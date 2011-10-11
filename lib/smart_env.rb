@@ -5,14 +5,10 @@ module SmartEnv
   attr_accessor :registry
 
   def clear_registry
-    @registry = []
+    @registry = empty_registry
   end
 
-  def reset_registry
-    @registry = default
-  end
-
-  def default
+  def empty_registry
     []
   end
 
@@ -25,28 +21,24 @@ module SmartEnv
   end
 
   def when(&block)
-    raise "Block must take 0 or 2 arguments: key and value" unless (block.arity == 0 || block.arity == 2)
+    raise "Block must take 0 or 2 arguments: key and value" unless (block.arity < 1 || block.arity == 2)
     registry << [@class, block]
     self
   end
 
   def registry
-    @registry ||= default
-  end
-
-  def unload!
-    class << self
-      alias_method :[], :get  
-#      alias_method :[]=, :set
-    end
+    @registry ||= empty_registry
   end
 
   def self.extended(base)
+    raise RuntimeError.new("#{base.inspect} doesn't respond to #[]") \
+      unless base.respond_to? :[]
+
     class << base
-      alias_method :get, :[]  
+      alias_method :__get, :[]  
 
       def [](key)
-        value = get(key)
+        value = __get(key)
         registry.each do |klass, condition|
           result = condition.call(key, value) rescue false
           value  = klass.new(key, value) if value && result

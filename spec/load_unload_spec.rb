@@ -1,18 +1,25 @@
 require 'spec_helper'
 
 describe SmartEnv, 'load/unload' do 
+  before do
+    class PassOne < String
+      attr_accessor :one
+      def initialize(key, value)
+        @one = true
+        super(value)
+      end
+    end
+
+    @env = {} 
+  end
+
   context "on extend" do
     before do
-      @env = {} 
       @env.extend SmartEnv
+    end
 
-      class PassOne < String
-        attr_accessor :one
-        def initialize(key, value)
-          @one = true
-          super(value)
-        end
-      end
+    after do
+      @env.clear_registry if @env
     end
 
     it "should not bleed" do
@@ -23,5 +30,17 @@ describe SmartEnv, 'load/unload' do
       ENV['FOO'].should_not respond_to :one
       @env['FOO'].one.should be_true
     end
+  end
+
+  context "::clear_registry" do
+    before do
+      @env.extend SmartEnv
+      @env.use(PassOne).when{ true }
+    end
+
+    it "should clear the hooks" do
+      @env.clear_registry
+      @env['FOO'].should_not respond_to :one
+    end 
   end
 end

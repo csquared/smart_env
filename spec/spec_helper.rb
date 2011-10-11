@@ -1,8 +1,8 @@
-require_relative '../lib/smart_env'
+require File.expand_path('../../lib/smart_env', __FILE__)
+require 'rspec/core'
 
 RSpec.configure do |config|
   config.after(:each) do
-    ENV.reset_registry
-    @env.reset_registry if @env
+    ENV.clear_registry
   end
 end

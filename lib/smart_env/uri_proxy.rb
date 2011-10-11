@@ -2,6 +2,10 @@ require 'uri'
 require 'cgi'
 require 'forwardable'
 
+class BasicObject
+  instance_methods.each { |m| undef_method m unless m =~ /^__|instance_eval/ }
+end unless defined?(BasicObject)
+
 module SmartEnv
   class UriProxy < BasicObject
     attr_reader :params

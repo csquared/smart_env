@@ -1,7 +1,6 @@
-source "http://rubygems.org"
-
-# Specify your gem's dependencies in env.gemspec
+source :gemcutter
 gemspec
 
-gem 'ruby-debug19'
-gem 'rspec'
+group :development do
+  gem 'ruby-debug19', :platform => :mri_19
+end
