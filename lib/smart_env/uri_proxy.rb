@@ -21,15 +21,15 @@ module SmartEnv
       end
     end
 
+    #for SmartEnv
     def self.when(key, value)
       value.match(/^\w+:\/\//) 
     end
 
-    def base_uri
+    def base_uri(port = false)
       base = "#{@uri.scheme}://#{@uri.host}"
-      (@uri.port ? "#{base}:#{@uri.port}" : base) + '/'
+      port ? "#{base}:#{@uri.port}" : base
     end
-    alias url base_uri
 
     def method_missing(method, *args, &block)
       @original.send(method, *args, &block) 
