@@ -42,5 +42,12 @@ describe SmartEnv, 'load/unload' do
       @env.clear_registry
       @env['FOO'].should_not respond_to :one
     end 
+
+    it "should clear memoized values" do
+      @env['FOO'] = 'test'
+      memoized = @env['FOO']
+      @env.clear_registry
+      @env['FOO'].object_id.should_not == memoized.object_id
+    end
   end
 end
