@@ -4,37 +4,6 @@ require "smart_env/uri_proxy"
 module SmartEnv
   attr_accessor :registry
 
-  def clear_registry
-    @registry = empty_registry
-    @memoized = {}
-  end
-
-  def empty_registry
-    []
-  end
-
-  def use(klass)
-    @class = klass
-    if @class.respond_to? :when
-      registry << [@class, lambda { |k,v| @class.when(k,v)  }]
-    end
-    self
-  end
-
-  def when(&block)
-    raise "Block must take 0 or 2 arguments: key and value" unless (block.arity < 1 || block.arity == 2)
-    registry << [@class, block]
-    self
-  end
-
-  def registry
-    @registry ||= empty_registry
-  end
-
-  def memoized
-    @memoized ||= {}
-  end
-
   def self.extended(base)
     raise RuntimeError.new("#{base.inspect} doesn't respond to #[]") \
       unless base.respond_to? :[]
@@ -58,6 +27,38 @@ module SmartEnv
         memoized[key] = value
       end
     end
+  end
+
+  def use(klass)
+    @class = klass
+    if @class.respond_to? :when
+      registry << [@class, lambda { |k,v| @class.when(k,v)  }]
+    end
+    self
+  end
+
+  def when(&block)
+    raise "Block must take 0 or 2 arguments: key and value" unless (block.arity < 1 || block.arity == 2)
+    registry << [@class, block]
+    self
+  end
+
+  def clear_registry
+    @registry = empty_registry
+    @memoized = {}
+  end
+
+  private
+  def empty_registry
+    []
+  end
+
+  def registry
+    @registry ||= empty_registry
+  end
+
+  def memoized
+    @memoized ||= {}
   end
 end
 
