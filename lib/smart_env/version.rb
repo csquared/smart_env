@@ -1,3 +1,3 @@
 module SmartEnv
-  VERSION = "0.5.1"
+  VERSION = "1.0.0rc1"
 end
