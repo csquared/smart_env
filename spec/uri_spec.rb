@@ -25,14 +25,14 @@ describe SmartEnv, 'uri support' do
       ENV['FOO'].should == @url
     end
 
-    it "should return scheme://host for #base_uri" do
-      ENV['FOO'].base_uri.should == 'http://this.domain.example.com'
+    it "should return scheme://host:port for #base_uri" do
+      ENV['FOO'].base_uri.should == 'http://this.domain.example.com:3000'
+      ENV['FOO'] = @url.gsub(':3000','')
+      ENV['FOO'].base_uri.should == 'http://this.domain.example.com:80'
     end
 
-    it "should return scheme://host:port for #base_uri(true)" do
-      ENV['FOO'].base_uri(true).should == 'http://this.domain.example.com:3000'
-      ENV['FOO'] = @url.gsub(':3000','')
-      ENV['FOO'].base_uri(true).should == 'http://this.domain.example.com:80'
+    it "should return scheme://host for #base_uri(false)" do
+      ENV['FOO'].base_uri(false).should == 'http://this.domain.example.com'
     end
 
     it "should respond to #scheme with the scheme" do

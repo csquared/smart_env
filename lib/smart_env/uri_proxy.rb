@@ -26,7 +26,7 @@ module SmartEnv
       value.match(/^\w+:\/\//) 
     end
 
-    def base_uri(port = false)
+    def base_uri(port = true)
       base = "#{@uri.scheme}://#{@uri.host}"
       port ? "#{base}:#{@uri.port}" : base
     end
