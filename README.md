@@ -13,8 +13,7 @@ Attach hooks to your ENV vars and wrap them in Proxy Objects.
     ENV['SERVICE'] = 'http://username:password@example.com:3000/"
 
     ENV['SERVICE']             #=> 'http://username:password@example.com:3000/"
-    ENV['SERVICE'].base_uri    #=> 'http://example.com/"
-    ENV['SERVICE'].url         #=> 'http://example.com/"
+    ENV['SERVICE'].base_uri    #=> 'http://example.com:3000"
     ENV['SERVICE'].user        #=> 'username'
     ENV['SERVICE'].password    #=> 'password'
     ENV['SERVICE'].host        #=> 'example.com'

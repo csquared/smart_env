@@ -48,5 +48,3 @@ module SmartEnv
     end
   end
 end
-
-ENV.extend SmartEnv
